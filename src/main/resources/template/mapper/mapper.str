@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Mapper接口的位置">
+<mapper namespace="${system.package}.dao.${entity.className}Dao">
 
     <!-- 通过字段名字映射 -->
     <sql id="base_select">
