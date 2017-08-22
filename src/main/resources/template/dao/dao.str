@@ -1,0 +1,32 @@
+package ${system.package}.dao;
+
+import ${system.package}.entity.${entity.className};
+
+import java.util.List;
+
+/**
+ * @author ${system.author}
+ * @since ${system.date}
+ */
+public interface ${entity.className}Dao {
+
+    /**
+     * 添加记录, 返回受影响的记录条数
+     */
+    int add(${entity.className} ${entity.entityName});
+
+    /**
+     * 通过主键id更新, 返回受影响的记录条数
+     */
+    int updateById(${entity.className} ${entity.entityName});
+
+    /**
+     * 查询, 自行控制条件保证返回一条记录
+     */
+    ${entity.className} queryOne(${entity.className} ${entity.entityName});
+
+    /**
+     * 查询, 自行控制条件保证返回多条记录
+     */
+    List<${entity.className}> queryList(${entity.className} ${entity.entityName});
+}

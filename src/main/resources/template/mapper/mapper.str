@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Mapper接口的位置">
+
+    <!-- 通过字段名字映射 -->
+    <sql id="base_select">
+        SELECT
+        ${repeat start}
+        ${entity.field.columnName.padding}    AS ${entity.field.fieldName},
+        ${repeat end}
+        FROM ${entity.tableName}
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="where_condition">
+        <where>
+            ${repeat start}
+            <if test="${entity.field.fieldName} != null">
+                AND ${entity.field.columnName} = #{${entity.field.fieldName}}
+            </if>
+            ${repeat end}
+        </where>
+    </sql>
+
+    <insert id="add" parameterType="${entity.className}" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ${entity.tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            ${repeat start}
+            <if test="${entity.field.fieldName} != null">
+                ${entity.field.columnName},
+            </if>
+            ${repeat end}
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            ${repeat start}
+            <if test="${entity.field.fieldName} != null">
+                #{${entity.field.fieldName}},
+            </if>
+            ${repeat end}
+        </trim>
+    </insert>
+
+    <!-- 通过主键id更新 -->
+    <update id="updateById" parameterType="${entity.className}">
+        UPDATE payment
+        <set>
+            ${repeat start}
+            <if test="${entity.field.fieldName} != null">
+                ${entity.field.columnName} = #{${entity.field.fieldName}},
+            </if>
+            ${repeat end}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="queryOne" parameterType="${entity.className}" resultType="${entity.className}">
+        <include refid="base_select"/>
+        <include refid="where_condition"/>
+    </select>
+
+    <select id="queryList" parameterType="${entity.className}" resultType="${entity.className}">
+        <include refid="base_select"/>
+        <include refid="where_condition"/>
+    </select>
+
+</mapper>
