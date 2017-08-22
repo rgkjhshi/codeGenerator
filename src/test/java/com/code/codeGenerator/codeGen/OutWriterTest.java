@@ -12,5 +12,4 @@ public class OutWriterTest {
     public void writeToFile() throws Exception {
         OutWriter.writeToFile();
     }
-
 }

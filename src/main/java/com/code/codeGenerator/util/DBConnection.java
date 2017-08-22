@@ -86,7 +86,9 @@ public class DBConnection {
         properties.setProperty("user", user);
         properties.setProperty("password", password);
 //        properties.setProperty("remarks", "true"); // 设置可以获取remarks信息
-        properties.setProperty("useInformationSchema", "true");//设置可以获取tables remarks信息
+        properties.setProperty("useInformationSchema", "true");  // 设置可以获取tables remarks信息(这个很重要)
+//        properties.setProperty("useUnicode", "true");
+//        properties.setProperty("characterEncoding", "UTF-8");
         try {
             connection = DriverManager.getConnection(url, properties);
         } catch (SQLException e) {
