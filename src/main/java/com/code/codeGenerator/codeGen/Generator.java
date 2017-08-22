@@ -28,7 +28,6 @@ public class Generator {
     private static final String system_package = "system.package";
     private static final String system_author = "system.author";
     private static final String system_date = "system.date";
-
     // 实体模板变量替换
     private static final String entity_tableName = "entity.tableName";
     private static final String entity_entityName = "entity.entityName";
@@ -69,7 +68,7 @@ public class Generator {
         return resultLine;
     }
 
-    protected Map<String, String> getEntityMap(DbTable dbTable) {
+    private Map<String, String> getEntityMap(DbTable dbTable) {
         Map<String, String> data = new HashMap<>();
         data.put(entity_tableName, dbTable.getTableName());
         data.put(entity_entityName, dbTable.getEntityName());
@@ -82,7 +81,7 @@ public class Generator {
         return data;
     }
 
-    protected Map<String, String> getFieldMap(DbTable dbTable, DbColumn dbColumn) {
+    private Map<String, String> getFieldMap(DbTable dbTable, DbColumn dbColumn) {
         Map<String, String> data = new HashMap<>();
         data.put(entity_field_columName, dbColumn.getColumnName());
         data.put(entity_field_fieldName, dbColumn.getFieldName());

@@ -25,17 +25,17 @@ public class DBConnection {
 
     public static List<DbTable> getTableList() {
         String dbName = PropertyUtils.get("jdbc.dbName");
-        String tableName = PropertyUtils.get("jdbc.tableName");
-        if (Strings.isNullOrEmpty(tableName)) {
-            tableName = "%";
+        String table = PropertyUtils.get("jdbc.tableName");
+        if (Strings.isNullOrEmpty(table)) {
+            table = "%";
         }
         List<DbTable> tableList = new ArrayList<>();
         Connection connection = DBConnection.getConnection();
         try {
             DatabaseMetaData metaData = connection.getMetaData();  // 获取数据库元数据
-            ResultSet tableSet = metaData.getTables(null, dbName, tableName, new String[]{"TABLE"});  // 获取所有表的结果集
+            ResultSet tableSet = metaData.getTables(dbName, dbName, table, new String[]{"TABLE"});  // 获取所有表的结果集
             while (tableSet.next()) {
-//                String tableName = tableSet.getString("TABLE_NAME");
+                String tableName = tableSet.getString("TABLE_NAME");
 //                if (TABLE_NAME.equals(tableName)) {
 //                }
                 // 生成表
@@ -45,7 +45,7 @@ public class DBConnection {
                 dbTable.setClassName(upperFirst(dbTable.getEntityName())); // 设置实体的类名
                 dbTable.setRemarks(tableSet.getString("REMARKS"));  // 表注释
                 // 遍历每一列
-                ResultSet columnSet = metaData.getColumns(null, dbName, tableName, "%");
+                ResultSet columnSet = metaData.getColumns(dbName, dbName, tableName, "%");
                 while (columnSet.next()) {
                     DbColumn dbColumn = new DbColumn();
                     dbColumn.setColumnName(columnSet.getString("COLUMN_NAME"));  // 表中列名

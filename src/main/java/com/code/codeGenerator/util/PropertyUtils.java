@@ -45,7 +45,6 @@ public class PropertyUtils {
         for (String key : properties.stringPropertyNames()) {
             propertyMap.put(key, properties.getProperty(key));
         }
-        logger.info("读取配置文件 config.properties 成功");
     }
 
     /**
