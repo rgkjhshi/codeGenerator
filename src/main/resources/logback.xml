@@ -14,8 +14,6 @@
         </encoder>
     </appender>
 
-    <logger name="com.qunar.micheal" level="DEBUG"/>
-
     <root level="info">
         <appender-ref ref="Console"/>
     </root>
