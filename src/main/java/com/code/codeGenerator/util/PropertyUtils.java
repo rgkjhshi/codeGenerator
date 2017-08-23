@@ -2,8 +2,6 @@ package com.code.codeGenerator.util;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,8 +15,6 @@ import java.util.Properties;
  * @since 2017-07-21
  */
 public class PropertyUtils {
-
-    private static final Logger logger = LoggerFactory.getLogger(PropertyUtils.class);
 
     /**
      * 存放属性配置的map
