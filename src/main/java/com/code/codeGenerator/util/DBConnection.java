@@ -32,29 +32,38 @@ public class DBConnection {
         List<DbTable> tableList = new ArrayList<>();
         Connection connection = DBConnection.getConnection();
         try {
-            DatabaseMetaData metaData = connection.getMetaData();  // 获取数据库元数据
-            ResultSet tableSet = metaData.getTables(null, dbName, table, new String[]{"TABLE"});  // 获取所有表的结果集
+            // 获取数据库元数据
+            DatabaseMetaData metaData = connection.getMetaData();
+            // 获取所有表的结果集
+            ResultSet tableSet = metaData.getTables(dbName, "", table, new String[]{"TABLE"});
             while (tableSet.next()) {
                 String tableName = tableSet.getString("TABLE_NAME");
-//                if (TABLE_NAME.equals(tableName)) {
-//                }
                 // 生成表
                 DbTable dbTable = new DbTable();
-                dbTable.setTableName(tableName); // 设置表名
-                dbTable.setEntityName(underlineToCamel(tableName)); // 设置表对应的实体名
-                dbTable.setClassName(upperFirst(dbTable.getEntityName())); // 设置实体的类名
-                dbTable.setRemarks(tableSet.getString("REMARKS"));  // 表注释
+                // 设置表名
+                dbTable.setTableName(tableName);
+                // 设置表对应的实体名
+                dbTable.setEntityName(underlineToCamel(tableName));
+                // 设置实体的类名
+                dbTable.setClassName(upperFirst(dbTable.getEntityName()));
+                // 表注释
+                dbTable.setRemarks(tableSet.getString("REMARKS"));
                 // 遍历每一列
                 ResultSet columnSet = metaData.getColumns(null, dbName, tableName, "%");
                 while (columnSet.next()) {
                     DbColumn dbColumn = new DbColumn();
-                    dbColumn.setColumnName(columnSet.getString("COLUMN_NAME"));  // 表中列名
-                    dbColumn.setFieldName(underlineToCamel(dbColumn.getColumnName())); // 对应实体的属性名
+                    // 表中列名
+                    dbColumn.setColumnName(columnSet.getString("COLUMN_NAME"));
+                    // 对应实体的属性名
+                    dbColumn.setFieldName(underlineToCamel(dbColumn.getColumnName()));
                     String jdbcType = columnSet.getString("TYPE_NAME");
                     jdbcType = Splitter.on(" ").omitEmptyStrings().splitToList(jdbcType).get(0);
-                    dbColumn.setJdbcType(jdbcType); // jdbcType
-                    dbColumn.setJavaType(Strings.nullToEmpty(PropertyUtils.get("jdbcType." + dbColumn.getJdbcType()))); // javaType
-                    dbColumn.setRemarks(Strings.nullToEmpty(columnSet.getString("REMARKS"))); // 字段注释
+                    // jdbcType
+                    dbColumn.setJdbcType(jdbcType);
+                    // javaType
+                    dbColumn.setJavaType(Strings.nullToEmpty(PropertyUtils.get("jdbcType." + dbColumn.getJdbcType())));
+                    // 字段注释
+                    dbColumn.setRemarks(Strings.nullToEmpty(columnSet.getString("REMARKS")));
                     dbTable.addColumn(dbColumn);
                 }
                 tableList.add(dbTable);
@@ -85,10 +94,12 @@ public class DBConnection {
         String password = PropertyUtils.get("jdbc.password");
         properties.setProperty("user", user);
         properties.setProperty("password", password);
-//        properties.setProperty("remarks", "true"); // 设置可以获取remarks信息
-        properties.setProperty("useInformationSchema", "true");  // 设置可以获取tables remarks信息(这个很重要)
-//        properties.setProperty("useUnicode", "true");
-//        properties.setProperty("characterEncoding", "UTF-8");
+        // 设置可以获取remarks信息
+        properties.setProperty("remarks", "true");
+        // 设置可以获取tables remarks信息(这个很重要)
+        properties.setProperty("useInformationSchema", "true");
+        properties.setProperty("useUnicode", "true");
+        properties.setProperty("characterEncoding", "UTF-8");
         try {
             connection = DriverManager.getConnection(url, properties);
         } catch (SQLException e) {
