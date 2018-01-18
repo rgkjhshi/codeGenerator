@@ -49,7 +49,7 @@ public class DBConnection {
                 // 表注释
                 dbTable.setRemarks(tableSet.getString("REMARKS"));
                 // 遍历每一列
-                ResultSet columnSet = metaData.getColumns(null, dbName, tableName, "%");
+                ResultSet columnSet = metaData.getColumns(dbName, "", tableName, "%");
                 while (columnSet.next()) {
                     DbColumn dbColumn = new DbColumn();
                     // 表中列名

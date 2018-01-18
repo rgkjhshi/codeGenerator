@@ -1,6 +1,6 @@
 package ${system.package}.entity;
 
-${entity.import}
+import ${entity.import}
 
 /**
  * ${entity.remarks}

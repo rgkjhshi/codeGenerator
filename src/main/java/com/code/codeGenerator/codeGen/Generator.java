@@ -49,19 +49,22 @@ public class Generator {
         List<String> repeatLines = new ArrayList<>();
         boolean repeat = false;
         for (String line : templateLines) {
-            if (line.contains(REPEAT_START)) {  // 重复开始
+            // 重复开始
+            if (line.contains(REPEAT_START)) {
                 repeat = true;
-            } else if (line.contains(REPEAT_END)) {  // 重复结束, 要处理重复的内容
-                // 处理重复的内容
+            } else if (line.contains(REPEAT_END)) {
+                // 重复结束, 要处理重复的内容
                 List<String> replacedLines = getReplacedLines(repeatLines, dbTable);
                 resultLine.addAll(replacedLines);
                 // 清空repeatLines
                 repeatLines.clear();
                 // 终止重复
                 repeat = false;
-            } else if (repeat) {  // 需要重复, 重复的内容累加
+            } else if (repeat) {
+                // 需要重复, 重复的内容累加
                 repeatLines.add(line);
-            } else {  // 不需要重复, 逐行处理
+            } else {
+                // 不需要重复, 逐行处理
                 resultLine.add(replaceLine(line, data));
             }
         }
@@ -118,8 +121,10 @@ public class Generator {
         Matcher matcher = PATTERN.matcher(line);
         StringBuffer sb = new StringBuffer();
         while (matcher.find()) {
-            String name = matcher.group(1);  // 键名
-            String value = Strings.nullToEmpty(data.get(name));  // 键值
+            // 键名
+            String name = matcher.group(1);
+            // 键值
+            String value = Strings.nullToEmpty(data.get(name));
             matcher.appendReplacement(sb, value);
         }
         matcher.appendTail(sb);

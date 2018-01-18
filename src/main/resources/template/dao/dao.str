@@ -11,22 +11,34 @@ import java.util.List;
 public interface ${entity.className}Dao {
 
     /**
-     * 添加记录, 返回受影响的记录条数
+     * 添加记录
+     *
+     * @param ${entity.entityName} 数据库实体
+     * @return 返回受影响的记录条数
      */
     int add(${entity.className} ${entity.entityName});
 
     /**
-     * 通过主键id更新, 返回受影响的记录条数
+     * 通过主键id更新
+     *
+     * @param ${entity.entityName} 数据库实体
+     * @return 返回受影响的记录条数
      */
     int updateById(${entity.className} ${entity.entityName});
 
     /**
-     * 查询, 自行控制条件保证返回一条记录
+     * 查询一条记录, 自行控制条件保证返回一条记录
+     *
+     * @param ${entity.entityName} 实体的非空属性会做为查询条件
+     * @return 查询到的结果, 无结果将返回null
      */
     ${entity.className} queryOne(${entity.className} ${entity.entityName});
 
     /**
-     * 查询, 自行控制条件保证返回多条记录
+     * 查询多条记录, 自行控制条件保证返回多条记录
+     *
+     * @param ${entity.entityName} 实体的非空属性会作为查询条件
+     * @return 查询到的结果, 无结果将返回空List
      */
     List<${entity.className}> queryList(${entity.className} ${entity.entityName});
 }
