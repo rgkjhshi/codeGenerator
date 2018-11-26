@@ -1,4 +1,4 @@
-package ${system.package}.dao;
+package ${system.package}.dao.mapper;
 
 import ${system.package}.entity.${entity.className};
 
@@ -8,7 +8,7 @@ import java.util.List;
  * @author ${system.author}
  * @since ${system.date}
  */
-public interface ${entity.className}Dao {
+public interface ${entity.className}Mapper {
 
     /**
      * 添加记录

@@ -17,7 +17,7 @@ public class GeneratorTest {
         List<DbTable> tableList = DBConnection.getTableList();
         DbTable table = tableList.get(0);
         Generator generator = new Generator();
-        List<String> lines = generator.generate(table, "template/entity/entity.str");
+        List<String> lines = generator.generate(table, "template/dao/entity/entity.str");
         for (String line : lines) {
             System.out.println(line);
         }
@@ -28,7 +28,7 @@ public class GeneratorTest {
         List<DbTable> tableList = DBConnection.getTableList();
         DbTable table = tableList.get(0);
         Generator generator = new Generator();
-        List<String> lines = generator.generate(table, "template/mapper/mapper.str");
+        List<String> lines = generator.generate(table, "template/mapper/xml.str");
         for (String line : lines) {
             System.out.println(line);
         }
@@ -39,7 +39,7 @@ public class GeneratorTest {
         List<DbTable> tableList = DBConnection.getTableList();
         DbTable table = tableList.get(0);
         Generator generator = new Generator();
-        List<String> lines = generator.generate(table, "template/dao/dao.str");
+        List<String> lines = generator.generate(table, "template/dao/mapper/mapper.str");
         for (String line : lines) {
             System.out.println(line);
         }
