@@ -1,6 +1,6 @@
 package ${system.package}.dao.mapper;
 
-import ${system.package}.entity.${entity.className};
+import ${system.package}.dao.entity.${entity.className};
 
 import java.util.List;
 
