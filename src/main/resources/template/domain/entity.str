@@ -1,4 +1,4 @@
-package ${system.package}.dao.entity;
+package ${system.package}.dao;
 
 import ${entity.import}
 

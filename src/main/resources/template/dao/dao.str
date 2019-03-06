@@ -1,6 +1,6 @@
-package ${system.package}.dao.mapper;
+package ${system.package}.dao;
 
-import ${system.package}.dao.entity.${entity.className};
+import ${system.package}.domain.${entity.className};
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * @author ${system.author}
  * @since ${system.date}
  */
-public interface ${entity.className}Mapper {
+public interface ${entity.className}Dao {
 
     /**
      * 添加记录

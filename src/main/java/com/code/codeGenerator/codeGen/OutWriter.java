@@ -16,8 +16,8 @@ import java.util.List;
 public class OutWriter {
     private static final Logger logger = LoggerFactory.getLogger(OutWriter.class);
 
-    private static final String ENTITY_TEMPLATE_FILE = "template/dao/entity/entity.str";
-    private static final String DAO_TEMPLATE_FILE = "template/dao/mapper/mapper.str";
+    private static final String ENTITY_TEMPLATE_FILE = "template/domain/entity.str";
+    private static final String DAO_TEMPLATE_FILE = "template/dao/dao.str";
     private static final String MAPPER_TEMPLATE_FILE = "template/mapper/xml.str";
 
     public static void writeToFile() {
@@ -31,7 +31,7 @@ public class OutWriter {
     private static void writeEntity(List<DbTable> tableList, String outputPath) {
         Generator generator = new Generator();
         for (DbTable dbTable : tableList) {
-            String fileName = outputPath + "/dao/entity/" + dbTable.getClassName() + ".java";
+            String fileName = outputPath + "/domain/" + dbTable.getClassName() + ".java";
             List<String> lines = generator.generate(dbTable, ENTITY_TEMPLATE_FILE);
             FileUtils.writeLines(lines, fileName);
             logger.info("已生成{}.java", dbTable.getClassName());
@@ -41,20 +41,20 @@ public class OutWriter {
     private static void writeDao(List<DbTable> tableList, String outputPath) {
         Generator generator = new Generator();
         for (DbTable dbTable : tableList) {
-            String fileName = outputPath + "/dao/mapper/" + dbTable.getClassName() + "Mapper.java";
+            String fileName = outputPath + "/dao/" + dbTable.getClassName() + "Dao.java";
             List<String> lines = generator.generate(dbTable, DAO_TEMPLATE_FILE);
             FileUtils.writeLines(lines, fileName);
-            logger.info("已生成{}Mapper.java", dbTable.getClassName());
+            logger.info("已生成{}Dao.java", dbTable.getClassName());
         }
     }
 
     private static void writeXml(List<DbTable> tableList, String outputPath) {
         Generator generator = new Generator();
         for (DbTable dbTable : tableList) {
-            String fileName = outputPath + "/mapper/" + dbTable.getClassName() + ".mapper";
+            String fileName = outputPath + "/mapper/" + dbTable.getClassName() + ".xml";
             List<String> lines = generator.generate(dbTable, MAPPER_TEMPLATE_FILE);
             FileUtils.writeLines(lines, fileName);
-            logger.info("已生成{}.mapper", dbTable.getClassName());
+            logger.info("已生成{}.xml", dbTable.getClassName());
         }
     }
 }
