@@ -11,6 +11,15 @@ import java.util.List;
 public interface ${entity.className}Dao {
 
     /**
+     * 通过字段名字映射, select * from table
+     */
+    String BASE_SELECT = "SELECT " +
+            ${repeat start}
+            "${entity.field.columnName.padding}    AS ${entity.field.fieldName}," +
+            ${repeat end}
+            "FROM ${entity.tableName}";
+
+    /**
      * 添加记录
      *
      * @param ${entity.entityName} 数据库实体
