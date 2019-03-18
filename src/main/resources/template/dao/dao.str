@@ -15,7 +15,7 @@ public interface ${entity.className}Dao {
      */
     String BASE_SELECT = "SELECT " +
             ${repeat start}
-            "${entity.field.columnName.padding}    AS ${entity.field.fieldName}," +
+            "${entity.field.columnName.padding}    AS ${entity.field.fieldName}, " +
             ${repeat end}
             "FROM ${entity.tableName}";
 
