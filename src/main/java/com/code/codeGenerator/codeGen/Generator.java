@@ -96,20 +96,21 @@ public class Generator {
     }
 
     private List<String> getReplacedLines(List<String> lines, DbTable dbTable) {
+        // 这里针对xml中base_select的最后一行做个特殊处理
+        if (lines.size() > 0) {
+            int index = lines.size() - 1;
+            String lastLine = lines.get(index);
+            if (lastLine.contains("${entity.field.fieldName},")) {
+                String newLastLine = lastLine.replace("${entity.field.fieldName},", "${entity.field.fieldName}");
+                lines.set(index, newLastLine);
+            }
+        }
+        // 字段替换
         List<String> resultList = new ArrayList<>();
         for (DbColumn dbColumn : dbTable.getColumnList()) {
             Map<String, String> data = getFieldMap(dbTable, dbColumn);
             List<String> fieldList = replaceLines(lines, data);
             resultList.addAll(fieldList);
-        }
-        // 这里针对xml中base_select的最后一行做个特殊处理
-        if (resultList.size() > 0) {
-            int index = resultList.size() - 1;
-            String lastLine = resultList.get(index);
-            if (lastLine.endsWith(",")) {
-                lastLine = lastLine.substring(0, lastLine.lastIndexOf(','));
-                resultList.set(index, lastLine);
-            }
         }
         return resultList;
     }
