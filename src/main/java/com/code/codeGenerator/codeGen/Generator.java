@@ -107,7 +107,7 @@ public class Generator {
         if (resultList.size() > 0) {
             int index = resultList.size() - 1;
             String lastLine = resultList.get(index);
-            if (lastLine.endsWith(",")) {
+            if (lastLine.endsWith(",") && lastLine.contains("AS")) {
                 lastLine = lastLine.substring(0, lastLine.lastIndexOf(','));
                 resultList.set(index, lastLine);
             }

@@ -1,8 +1,8 @@
 package ${system.package}.dao;
 
 import ${system.package}.domain.${entity.className};
-
 import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 
 /**
@@ -12,26 +12,16 @@ import java.util.List;
 public interface ${entity.className}Dao {
 
     /**
-     * 通过字段名字映射, select * from table
+     * 通过主键id查询
+     *
+     * @param id 主键id
+     * @return 查询到的结果, 无结果将返回null
      */
-    String BASE_SELECT = "SELECT " +
-            ${repeat start}
-            "${entity.field.columnName.padding}    AS ${entity.field.fieldName}, " +
-            ${repeat end}
-            "FROM ${entity.tableName}";
-
     @Results(id = "baseResult", value = {
-            @Result(property = "userId", column = "userid"),
-            @Result(property = "batchId", column = "batch_id"),
-            @Result(property = "codeSecret", column = "code_secret"),
-            @Result(property = "leafId", column = "leaf_id"),
-            @Result(property = "createTime", column = "create_time"),
-            @Result(property = "updateTime", column = "update_time")
+            ${repeat start}
+            @Result(property = "${entity.field.fieldName}", column = "${entity.field.columnName}"),
+            ${repeat end}
     })
-    @Select("SELECT * FROM ${entity.tableName}")
-    List<${entity.className}> queryAll();
-
-    @ResultMap("baseResult")
     @Select("SELECT * FROM ${entity.tableName} WHERE id = #{id}")
     ${entity.className} queryById(long id);
 
@@ -41,7 +31,30 @@ public interface ${entity.className}Dao {
      * @param ${entity.entityName} 数据库实体
      * @return 返回受影响的记录条数
      */
+    @Insert({"<script>",
+            "INSERT INTO ${entity.tableName}",
+            "<trim prefix='(' suffix=')' suffixOverrides=','>",
+            "${repeat start}",
+            "<if test='${entity.field.fieldName} != null'>${entity.field.columnName}</if>",
+            "${repeat end}",
+            "</trim>",
+            "<trim prefix='VALUES (' suffix=')' suffixOverrides=','>",
+            "${repeat start}",
+            "<if test='${entity.field.fieldName} != null'>#{${entity.field.fieldName}}</if>",
+            "${repeat end}",
+            "</trim>",
+            "</script>"})
+    @Options(useGeneratedKeys = true)
     int add(${entity.className} ${entity.entityName});
+
+    /**
+     * 通过主键id删除
+     *
+     * @param id 主键id
+     * @return 返回受影响的记录条数
+     */
+    @Delete("DELETE FROM ${entity.tableName} WHERE id = #{id}")
+    int deleteById(long id);
 
     /**
      * 通过主键id更新
@@ -49,6 +62,15 @@ public interface ${entity.className}Dao {
      * @param ${entity.entityName} 数据库实体
      * @return 返回受影响的记录条数
      */
+    @Update({"<script>",
+            "UPDATE ${entity.tableName}",
+            "<set>",
+            "${repeat start}",
+            "<if test='${entity.field.fieldName} != null'>${entity.field.columnName} = #{${entity.field.fieldName}},</if>",
+            "${repeat end}",
+            "</set>",
+            "WHERE id = #{id}",
+            "</script>"})
     int updateById(${entity.className} ${entity.entityName});
 
     /**
@@ -57,6 +79,15 @@ public interface ${entity.className}Dao {
      * @param ${entity.entityName} 实体的非空属性会做为查询条件
      * @return 查询到的结果, 无结果将返回null
      */
+    @ResultMap("baseResult")
+    @Select({"<script>",
+            "SELECT * FROM ${entity.tableName}",
+            "<where>",
+            "${repeat start}",
+            "<if test='${entity.field.fieldName} != null'>AND ${entity.field.columnName} = #{${entity.field.fieldName}}</if>",
+            "${repeat end}",
+            "</where>",
+            "</script>"})
     ${entity.className} queryOne(${entity.className} ${entity.entityName});
 
     /**
@@ -65,5 +96,14 @@ public interface ${entity.className}Dao {
      * @param ${entity.entityName} 实体的非空属性会作为查询条件
      * @return 查询到的结果, 无结果将返回空List
      */
+    @ResultMap("baseResult")
+    @Select({"<script>",
+            "SELECT * FROM ${entity.tableName}",
+            "<where>",
+            "${repeat start}",
+            "<if test='${entity.field.fieldName} != null'>AND ${entity.field.columnName} = #{${entity.field.fieldName}}</if>",
+            "${repeat end}",
+            "</where>",
+            "</script>"})
     List<${entity.className}> queryList(${entity.className} ${entity.entityName});
 }
