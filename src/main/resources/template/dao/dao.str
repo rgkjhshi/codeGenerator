@@ -34,14 +34,14 @@ public interface ${entity.className}Dao {
     @Insert({"<script>",
             "INSERT INTO ${entity.tableName}",
             "<trim prefix='(' suffix=')' suffixOverrides=','>",
-            "${repeat start}",
-            "<if test='${entity.field.fieldName} != null'>${entity.field.columnName}</if>",
-            "${repeat end}",
+            ${repeat start}
+            "    <if test='${entity.field.fieldName} != null'>${entity.field.columnName}</if>",
+            ${repeat end}
             "</trim>",
             "<trim prefix='VALUES (' suffix=')' suffixOverrides=','>",
-            "${repeat start}",
-            "<if test='${entity.field.fieldName} != null'>#{${entity.field.fieldName}}</if>",
-            "${repeat end}",
+            ${repeat start}
+            "    <if test='${entity.field.fieldName} != null'>#{${entity.field.fieldName}}</if>",
+            ${repeat end}
             "</trim>",
             "</script>"})
     @Options(useGeneratedKeys = true)
@@ -65,9 +65,9 @@ public interface ${entity.className}Dao {
     @Update({"<script>",
             "UPDATE ${entity.tableName}",
             "<set>",
-            "${repeat start}",
-            "<if test='${entity.field.fieldName} != null'>${entity.field.columnName} = #{${entity.field.fieldName}},</if>",
-            "${repeat end}",
+            ${repeat start}
+            "    <if test='${entity.field.fieldName} != null'>${entity.field.columnName} = #{${entity.field.fieldName}},</if>",
+            ${repeat end}
             "</set>",
             "WHERE id = #{id}",
             "</script>"})
@@ -83,9 +83,9 @@ public interface ${entity.className}Dao {
     @Select({"<script>",
             "SELECT * FROM ${entity.tableName}",
             "<where>",
-            "${repeat start}",
-            "<if test='${entity.field.fieldName} != null'>AND ${entity.field.columnName} = #{${entity.field.fieldName}}</if>",
-            "${repeat end}",
+            ${repeat start}
+            "    <if test='${entity.field.fieldName} != null'>AND ${entity.field.columnName} = #{${entity.field.fieldName}}</if>",
+            ${repeat end}
             "</where>",
             "</script>"})
     ${entity.className} queryOne(${entity.className} ${entity.entityName});
@@ -100,9 +100,9 @@ public interface ${entity.className}Dao {
     @Select({"<script>",
             "SELECT * FROM ${entity.tableName}",
             "<where>",
-            "${repeat start}",
-            "<if test='${entity.field.fieldName} != null'>AND ${entity.field.columnName} = #{${entity.field.fieldName}}</if>",
-            "${repeat end}",
+            ${repeat start}
+            "    <if test='${entity.field.fieldName} != null'>AND ${entity.field.columnName} = #{${entity.field.fieldName}}</if>",
+            ${repeat end}
             "</where>",
             "</script>"})
     List<${entity.className}> queryList(${entity.className} ${entity.entityName});
