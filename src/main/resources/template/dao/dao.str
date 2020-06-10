@@ -9,6 +9,7 @@ import java.util.List;
  * @author ${system.author}
  * @since ${system.date}
  */
+@Mapper
 public interface ${entity.className}Dao {
 
     /**

@@ -53,10 +53,10 @@ public class DbTable {
             maxColumnLength = column.getColumnName().length();
         }
         if ("BigDecimal".equals(column.getJavaType())) {
-            importSet.add("java.math.BigDecimal;");
+            importSet.add("import java.math.BigDecimal;");
         }
         if ("Date".equals(column.getJavaType())) {
-            importSet.add("java.util.Date;");
+            importSet.add("import java.util.Date;");
         }
     }
 

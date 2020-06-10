@@ -1,6 +1,8 @@
 package ${system.package}.dao;
 
-import ${entity.import}
+import lombok.Data;
+import org.apache.ibatis.type.Alias;
+${entity.import}
 
 /**
  * ${entity.remarks}
@@ -8,6 +10,8 @@ import ${entity.import}
  * @author ${system.author}
  * @since ${system.date}
  */
+@Data
+@Alias("${entity.className}")
 public class ${entity.className} {
 
     ${repeat start}
