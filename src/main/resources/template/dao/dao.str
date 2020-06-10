@@ -2,6 +2,7 @@ package ${system.package}.dao;
 
 import ${system.package}.domain.${entity.className};
 
+import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 /**
@@ -18,6 +19,21 @@ public interface ${entity.className}Dao {
             "${entity.field.columnName.padding}    AS ${entity.field.fieldName}, " +
             ${repeat end}
             "FROM ${entity.tableName}";
+
+    @Results(id = "baseResult", value = {
+            @Result(property = "userId", column = "userid"),
+            @Result(property = "batchId", column = "batch_id"),
+            @Result(property = "codeSecret", column = "code_secret"),
+            @Result(property = "leafId", column = "leaf_id"),
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "updateTime", column = "update_time")
+    })
+    @Select("SELECT * FROM ${entity.tableName}")
+    List<${entity.className}> queryAll();
+
+    @ResultMap("baseResult")
+    @Select("SELECT * FROM ${entity.tableName} WHERE id = #{id}")
+    ${entity.className} queryById(long id);
 
     /**
      * 添加记录
