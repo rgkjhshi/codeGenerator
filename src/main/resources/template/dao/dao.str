@@ -36,12 +36,12 @@ public interface ${entity.className}Dao {
             "INSERT INTO ${entity.tableName}",
             "<trim prefix='(' suffix=')' suffixOverrides=','>",
             ${repeat start}
-            "    <if test='${entity.field.fieldName} != null'>${entity.field.columnName}</if>",
+            "    <if test='${entity.field.fieldName} != null'>${entity.field.columnName},</if>",
             ${repeat end}
             "</trim>",
             "<trim prefix='VALUES (' suffix=')' suffixOverrides=','>",
             ${repeat start}
-            "    <if test='${entity.field.fieldName} != null'>#{${entity.field.fieldName}}</if>",
+            "    <if test='${entity.field.fieldName} != null'>#{${entity.field.fieldName}},</if>",
             ${repeat end}
             "</trim>",
             "</script>"})
